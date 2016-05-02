@@ -1,6 +1,6 @@
 const fetch = require('node-fetch');
 
-const baseUrl = 'http://172.18.41.188:3000/';
+const baseUrl = 'http://localhost:3000/';
 const baseApiUrl = baseUrl + 'api/';
 const docsUrl = baseApiUrl + 'docs/';
 
@@ -9,15 +9,19 @@ function getDocList() {
 }
 
 function getDoc(id) {
-  return getJson(docsUrl + id);
+  return getJson(getDocUrl(id));
+}
+
+function getDocUrl(id){
+  return docsUrl + id;
 }
 
 function getJson(url) {
   var promise = new Promise((resolve, reject) => {
-    fetch(docsUrl)
-      .then(function(res) {
+    fetch(url)
+      .then(function (res) {
         return res.json();
-      }).then(function(data) {
+      }).then(function (data) {
         resolve(data);
       });
   });
@@ -26,3 +30,5 @@ function getJson(url) {
 
 exports.getDocList = getDocList;
 exports.getDoc = getDoc;
+exports.getDocUrl = getDocUrl;
+exports.baseUrl = baseUrl;

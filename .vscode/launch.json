@@ -34,7 +34,7 @@
       "name": "Launch-mac",
       "type": "node",
       "request": "launch",
-      "program": "${workspaceRoot}/app/electron.js",
+      "program": "${workspaceRoot}/app/desktop.js",
       "stopOnEntry": false,
       "args": [
         "."

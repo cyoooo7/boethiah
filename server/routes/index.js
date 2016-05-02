@@ -12,7 +12,7 @@ router.get('/display', function(req, res, next) {
     res.render('display');
 });
 
-router.get('/*.*', function(req, res, next) {
+router.get('/main.js', function(req, res, next) {
     var file = path.resolve(path.join('./res', req.url));
     fs.stat(file, (err, stats) => {
         if (err) {

@@ -8,11 +8,12 @@ var electronWindow = electron.getCurrentWindow();
 function addDebugFeatures() {
   $('html').keydown(event => {
     // Alt+R
-    if (event.keyCode === 82 && event.altKey) {
+    if (event.keyCode === 82 && (event.altKey || event.metaKey)) {
+      location.hash='';
       location.reload();
     }
     // Alt+D
-    if (event.keyCode === 68 && event.altKey) {
+    if (event.keyCode === 68 && (event.altKey || event.metaKey)) {
       var win = electron.getCurrentWindow();
       win.webContents.openDevTools();
     }
