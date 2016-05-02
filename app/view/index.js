@@ -8,6 +8,7 @@ let thumbnailPanel = require('./thumbnailPanel.js');
 let currentDoc;
 let currentSlideIndex;
 let renderer = new SlideRenderer();
+let isDisplayMode = false;
 
 function init() {
   $(window).bind('hashchange', onHashChange);
@@ -21,14 +22,35 @@ function onPageReady() {
   window.onresize = function () {
     updateLayout();
   };
+  $('body').on('click', '#board', (event) => {
+    if (!isDisplayMode) {
+      return;
+    }
+    var w = $('#board').width();
+    var x = event.offsetX;
+    if (x > w / 2) {
+      setSlideIndex(currentSlideIndex + 1);
+    } else {
+      setSlideIndex(currentSlideIndex - 1);
+    }
+  });
+  // $('body').on('click', (event)=>{
+  //   console.log(event);
+  // });
+  $('#display-button').click(() => {
+    startDisplayMode();
+  });
+  $('#exit-dispaly-button').click(() => {
+    endDisplayMode();
+  });
   $('html').keydown(function (event) {
     // F5
     if (event.keyCode === 116) {
-      $('#board').addClass('fullscreen');
+      startDisplayMode();
     }
     // Esc
     if (event.keyCode === 27) {
-      $('#board').removeClass('fullscreen');
+      endDisplayMode();
     }
     // LeftArrow, UpArrow, PgUp
     if (event.keyCode === 37 || event.keyCode === 38 || event.keyCode === 33) {
@@ -40,6 +62,18 @@ function onPageReady() {
     }
   });
   onHashChange();
+}
+
+function startDisplayMode() {
+  isDisplayMode = true;
+  $('#board').addClass('fullscreen');
+  $('#exit-dispaly-button').show('fast');
+}
+
+function endDisplayMode() {
+  isDisplayMode = false;
+  $('#board').removeClass('fullscreen');
+  $('#exit-dispaly-button').hide('fast');
 }
 
 function updateLayout() {

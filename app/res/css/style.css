@@ -408,3 +408,12 @@ ul {
 #file-list-panel li:hover {
   background: #f3f3f6;
 }
+#exit-dispaly-button {
+  position: fixed;
+  top: 40px;
+  right: 21px;
+  font-size: 13px;
+  display: none;
+  cursor: pointer;
+  opacity: 0.4;
+}
