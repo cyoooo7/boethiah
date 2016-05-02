@@ -3,7 +3,7 @@ const fetch = require('node-fetch');
 
 let baseUrl = 'http://localhost:3000/';
 if(window.env==='browser'){
-  baseUrl = location.href;
+  baseUrl = location.origin + '/';
 }
 const baseApiUrl = baseUrl + 'api/';
 const docsUrl = baseApiUrl + 'docs/';
