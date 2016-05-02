@@ -1,5 +1,6 @@
 var gulp = require('gulp');
 var browserify = require('gulp-browserify');
+var babel = require("gulp-babel");
 
 var paths = {
   allScripts: './app/**/*.js',
@@ -17,6 +18,7 @@ gulp.task('bundle', function () {
       debug: true,
       ignore: 'remote'
     }))
+    .pipe(babel())
     .pipe(gulp.dest(paths.webRes))
     .pipe(gulp.dest('./phonegap/www'));
 });

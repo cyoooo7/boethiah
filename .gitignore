@@ -9,5 +9,6 @@ server/res
 /.idea/.DS_Store
 /.idea/*.DS_Store
 /webapp
+/phonegap/www
 /server/core
 typings

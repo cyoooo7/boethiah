@@ -17,13 +17,15 @@ function init() {
     $('#content').click(() => {
       $('#file-list-panel').fadeOut("fast");
     });
-
     $('#file-list').on('click', 'li', event => {
       let anchor = $.uriAnchor.makeAnchorMap();
       anchor.did = event.target.attributes['data-doc-id'].value;
       $.uriAnchor.setAnchor(anchor);
       $('#file-list-panel').fadeOut("fast");
     });
+    if (!location.hash) {
+      $('#file-list-button').trigger('click');
+    }
   });
 }
 
