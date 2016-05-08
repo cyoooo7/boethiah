@@ -1,0 +1,7 @@
+{
+  "name": "boethiah-desktop",
+  "version": "1.0.0",
+  "description": "A Roy Cheng's application",
+  "main": "./src/electron.js",
+  "license": "SEE LICENSE IN LICENSE.md "
+} 

@@ -59,4 +59,9 @@ function addDesktopFeatures() {
   });
 }
 
-exports.addDesktopFeatures = addDesktopFeatures;
+function init(){
+  addDebugFeatures();
+  addDesktopFeatures();
+}
+
+exports.init = init;

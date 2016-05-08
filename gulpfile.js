@@ -1,53 +1,80 @@
 var gulp = require('gulp');
 var browserify = require('gulp-browserify');
+var babel = require("gulp-babel");
 
-gulp.task('bundle', function() {
-  gulp.src('./app/main.js')
-    .pipe(browserify({
-      insertGlobals: true,
-      debug: true,
-      ignore: 'remote'
-    }))
-    .pipe(gulp.dest('./webapp'));
-  gulp.src('./app/main.js')
-    .pipe(browserify({
-      insertGlobals: true,
-      debug: true,
-      ignore: 'remote'
-    }))
-    .pipe(gulp.dest('./server/res'));
+var paths = {
+  core: './core/**/*.*',
+  coreLib: './core/src/**/*.*',
+  coreRes: './core/res/**/*.*',
+  coreIndexHtml: './core/index.html',
+  electron: './electron/**/*.*',
+  web: './web/**/*.*',
+  serverCore: './server/core/',
+  serverRes: './server/res/',
+  binElectron: './bin/electron/',
+  binWeb: './bin/web',
+  binWebMainjs: './bin/web/main.js',
+  binWebSrc: './bin/web/src/'
+};
+
+function copy(src, dst) {
+  var promise = new Promise((resolve, reject) => {
+    gulp.src(src).pipe(gulp.dest(dst)).on('end', () => {
+      resolve();
+    });
+  });
+  return promise;
+}
+
+function bundle(src, dst) {
+  var promise = new Promise((resolve, reject) => {
+    gulp.src(src)
+      .pipe(browserify({
+        insertGlobals: true,
+        debug: true,
+        ignore: 'remote'
+      }))
+      .pipe(babel())
+      .pipe(gulp.dest(dst))
+      .on('end', () => {
+        resolve();
+      });
+  });
+  return promise;
+}
+
+gulp.task('build-electron', cb => {
+  copy(paths.core, paths.binElectron).then(() => {
+    copy(paths.electron, paths.binElectron).then(cb);
+  });
 });
 
-gulp.task('bundle-server', function() {
-  gulp.src('./server/src/display.js')
-    .pipe(browserify({
-      insertGlobals: true,
-      debug: true,
-      ignore: 'remote'
-    }))
-    .pipe(gulp.dest('./server/res'));
+gulp.task('build-web', cb => {
+  copy(paths.core, paths.binWeb).then(() => {
+    copy(paths.web, paths.binWeb).then(() => {
+      bundle(paths.binWebMainjs, paths.serverRes).then(() => {
+        cb();
+      });
+    });
+  });
 });
 
-gulp.task('mirror', function() {
-  gulp.src('./app/index.html')
-    .pipe(gulp.dest('./webapp'));
-  gulp.src('./app/res/**')
-    .pipe(gulp.dest('./webapp/res'));
-
-  gulp.src('./app/index.html')
-    .pipe(gulp.dest('./server/res'));
-  gulp.src('./app/res/**')
-    .pipe(gulp.dest('./server/res'));
-  gulp.src('./app/core/**')
-    .pipe(gulp.dest('./server/core'));
+gulp.task('build-server', cb => {
+  Promise.all([
+    copy(paths.coreLib, paths.serverCore),
+    copy(paths.coreIndexHtml, paths.serverRes),
+    copy(paths.coreRes, paths.serverRes)
+  ]).then(() => {
+    cb();
+  });
 });
 
-gulp.task('watch', function() {
-  gulp.watch('app/*.js', ['bundle', 'bundle-server']);
-  gulp.watch('app/*.html', ['mirror']);
-  gulp.watch('app/res/*.*', ['mirror']);
-  gulp.watch('app/core/*.*', ['mirror']);
-  gulp.watch('server/src/*.js', ['bundle-server']);
+gulp.task('watch', () => {
+  gulp.watch(paths.core, ['build-electron', 'build-server', 'build-web']);
+  gulp.watch(paths.electron, ['build-electron']);
+  gulp.watch(paths.web, ['build-web']);
 });
 
-gulp.task('default', ['bundle', 'mirror', 'bundle-server', 'watch']);
+gulp.task('build', ['build-electron', 'build-server', 'build-web']);
+
+gulp.task('default', ['build', 'watch']);

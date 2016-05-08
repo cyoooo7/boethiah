@@ -11,3 +11,4 @@ server/res
 /webapp
 /server/core
 typings
+/bin

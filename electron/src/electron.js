@@ -23,12 +23,13 @@ function createWindow() {
   });
 
   mainWindow.setMenu(null);
+  
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools();
+
 
   // and load the index.html of the app.
-  mainWindow.loadURL('file://' + __dirname + '/index.html');
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  mainWindow.loadURL('file://' + __dirname + '/../index.html');
 
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
