@@ -5,6 +5,7 @@ body {
   font-family: 微软雅黑, helvetica;
   color: #363636;
   cursor: default;
+  overflow-x: hidden;
 }
 
 ul {
@@ -35,6 +36,7 @@ ul {
 
 #app {
   height: 100%;
+  overflow-x: hidden;
 }
 
 .header {
@@ -95,7 +97,7 @@ ul {
 }
 
 #title{
-    margin:0;
+    margin:0px 40px;
     padding:7px;
     text-align: center;
     color:#A6A8B5;
@@ -148,7 +150,7 @@ ul {
     margin:0px;
 }
 .doc-name{
-    padding: 18px 0 2px 0;;
+    padding: 18px 0px 2px 0px;
     font-size:14px;
 }
 .doc-info{
@@ -162,13 +164,14 @@ ul {
 }
 #content{
     height: calc(100% - 32px);
-    overflow: auto;
+    overflow-x: hidden;
 }
 #doc-body{
-    margin: 40px;
+    margin: 35px 40px 0px 40px;
 }
 #doc-header h1{
-    font-size: 30px;
+    font-size: 25px;
+font-weight:normal;
     padding:0;
     margin:0;
 }
@@ -186,8 +189,9 @@ ul {
 }
 .doc-slide-item {
   position: relative;
-  width: 320px;
-  height: 180px;flex-shrink:0.5;
+  width: 288px;
+  height: 162px;
+  flex-shrink:0.5;
   margin-right: 40px;
   margin-bottom: 50px;
   
@@ -210,3 +214,4 @@ ul {
   height:50px;
   top:0px;
 }
+

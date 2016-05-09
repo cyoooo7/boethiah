@@ -1,0 +1,7 @@
+/*darwin*/
+.darwin #main .header {
+    display:none;
+}
+.darwin #content{
+    height:100%;
+}

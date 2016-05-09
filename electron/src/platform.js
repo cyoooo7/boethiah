@@ -3,7 +3,8 @@
 const electron = require('remote');
 const $ = require('jquery');
 var electronWindow = electron.getCurrentWindow();
-
+var isDarwin = process.platform === 'darwin';
+var isWindows = process.platform === 'windows';
 
 function addDebugFeatures() {
   $('html').keydown(event => {
@@ -21,6 +22,12 @@ function addDebugFeatures() {
 
 function changeUI() {
   $('#system-buttons').show();
+  if(isDarwin){
+    $('body').addClass('darwin');
+  }
+  if(isWindows){
+    $('body').addClass('windows');
+  }
 }
 
 function initSystemButtons() {

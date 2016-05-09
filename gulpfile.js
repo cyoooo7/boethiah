@@ -9,6 +9,7 @@ var paths = {
   coreIndexHtml: './core/index.html',
   electron: './electron/**/*.*',
   web: './web/**/*.*',
+  webRes: './web/res/**/*.*',
   serverCore: './server/core/',
   serverRes: './server/res/',
   binElectron: './bin/electron/',
@@ -53,10 +54,13 @@ gulp.task('build-web', cb => {
   copy(paths.core, paths.binWeb).then(() => {
     copy(paths.web, paths.binWeb).then(() => {
       bundle(paths.binWebMainjs, paths.serverRes).then(() => {
-        cb();
+        copy(paths.webRes, paths.serverRes).then(() => {
+          cb();
+        });
       });
     });
   });
+
 });
 
 gulp.task('build-server', cb => {
