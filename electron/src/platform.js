@@ -34,6 +34,7 @@ function changeUI() {
           <img src="res/img/system-restore.svg" id="system-restore" />
           <img src="res/img/system-close.svg" id="system-close" />
         </p>`));
+    initSystemButtons();
   }
 }
 
@@ -68,7 +69,6 @@ function initSystemButtons() {
 function addDesktopFeatures() {
   $(document).ready(function() {
     addDebugFeatures();
-    initSystemButtons();
     changeUI();
   });
 }
@@ -79,3 +79,6 @@ function init() {
 }
 
 exports.init = init;
+exports.info = {
+  name: isWindows ? 'windows' : 'darwin'
+};

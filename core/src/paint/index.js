@@ -5,8 +5,12 @@ let Snap = require('snapsvg');
 
 const supported = {
 
-  picture: (m, paper) => {
-    var pic = paper.image(m.source, m.x, m.y, m.width, m.height);
+  picture: (m, paper, settings) => {
+    var img = m.source;
+    if (settings && settings.resolveRes) {
+      img = settings.resolveRes(img);
+    }
+    var pic = paper.image(img, m.x, m.y, m.width, m.height);
     return pic;
   },
 
@@ -88,7 +92,6 @@ class SlideRenderer {
   }
   renderElement(model, paper) {
     let delegate = supported[model._type];
-    // console.error(model._t   ypeName);
     if (delegate) {
       return delegate(model, paper, this.settings);
     } else {

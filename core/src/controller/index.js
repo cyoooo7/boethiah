@@ -7,19 +7,23 @@ let sidebar = require('./sidebar');
 let slidePanel = require('./slidePanel');
 let currentDoc;
 let currentSlideIndex;
-let renderer = new SlideRenderer();
+let renderSettings = {};
+if (window.platform.name !== 'web') {
+  renderSettings.resolveRes = res => service.baseUrl + res;
+}
+let renderer = new SlideRenderer('#board', renderSettings);
 let isDisplayMode = false;
 
 function init() {
   $(window).bind('hashchange', onHashChange);
   sidebar.init();
-  
+
   $(document).ready(onPageReady);
 }
 
 function onPageReady() {
   updateLayout();
-  window.onresize = function () {
+  window.onresize = function() {
     updateLayout();
   };
   $('body').on('click', '#board', (event) => {
@@ -34,16 +38,13 @@ function onPageReady() {
       setSlideIndex(currentSlideIndex - 1);
     }
   });
-  // $('body').on('click', (event)=>{
-  //   console.log(event);
-  // });
   $('#display-button').click(() => {
     startDisplayMode();
   });
   $('#exit-dispaly-button').click(() => {
     endDisplayMode();
   });
-  $('html').keydown(function (event) {
+  $('html').keydown(function(event) {
     // F5
     if (event.keyCode === 116) {
       startDisplayMode();
@@ -93,7 +94,7 @@ function onHashChange() {
     service.getDoc(anchor.did).then(doc => {
       setDoc(doc);
     });
-  }  
+  }
   if (currentDoc && anchor.slide && anchor.slide !== currentSlideIndex) {
     setSlideIndex(anchor.slide - 1);
   }

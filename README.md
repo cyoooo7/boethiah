@@ -30,7 +30,6 @@ cd server
 # Run build script by gulp
 node bin/www
 ```
-
 然后使用你感兴趣的平台来使用 boethiah。
 
 ### Web端

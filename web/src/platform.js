@@ -1,6 +1,8 @@
 "use strict";
 
-function init(){
-}
+function init() {}
 
 exports.init = init;
+exports.info = {
+  name: 'web'
+};
