@@ -1,30 +1,53 @@
-# electron-quick-start
+# EasiNote - boethiah
 
-**Clone and run for a quick way to see an Electron in action.**
+**使用前端技术创建一个跨平台的 [EasiNote](www.seewo.com/products/software/easinote.html) 课件播放客户端**
 
-This is a minimal Electron application based on the [Quick Start Guide](http://electron.atom.io/docs/latest/tutorial/quick-start) within the Electron documentation.
+这是一个**预研**性质的项目，我们只想探索出一条构建跨平台应用的实践之路。
 
-A basic Electron application needs just these files:
+目前已经兼容的平台：
+* Windows(Electron)
+* OSX(Electron)
+* Web(node.js)
+* iOS(PhoneGap)
 
-- `index.html` - A web page to render.
-- `main.js` - Starts the app and creates a browser window to render HTML.
-- `package.json` - Points to the app's main file and lists its details and dependencies.
+## 构建方法
 
-You can learn more about each of these components within the [Quick Start Guide](http://electron.atom.io/docs/latest/tutorial/quick-start).
+你需要首先确保本地计算机已安装了 [Git](https://git-scm.com) 和 [Node.js](https://nodejs.org/en/download/) (包括 [npm](http://npmjs.com))。
 
-## To Use
-
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+然后执行以下命令来下载并构建 boethiah。
 
 ```bash
 # Clone this repository
-git clone https://github.com/atom/electron-quick-start
+git clone https://github.com/cyoooo7/boethiah.git
 # Go into the repository
-cd electron-quick-start
+cd boethiah
 # Install dependencies and run the app
-npm install && npm start
+npm install
+# Run build script by gulp
+gulp build
+# Go into the server directory
+cd server
+# Run build script by gulp
+node bin/www
 ```
 
-Learn more about Electron and its API in the [documentation](http://electron.atom.io/docs/latest).
+然后使用你感兴趣的平台来使用 boethiah。
 
-#### License [CC0 (Public Domain)](LICENSE.md)
+### Web端
+使用浏览器(推荐 Chrome)访问 http://localhost:3000/
+
+### Windows或OSX端
+你需要先安装 [Electron-prebuild](https://github.com/electron-userland/electron-prebuilt)
+```bash
+# Install electron-prebuilt golobally
+npm install -g electron-prebuilt
+# Run
+electron bin/electron
+```
+
+### iOS端
+你需要先安装 [PhoneGap desktop app](http://phonegap.com/)，然后使用 PhoneGap desktop app 托管 bin/phonegap 目录。
+然后在 iOS 设备上安装 PhoneGap 应用，并通过应用连接 PhoneGap desktop app（具体步骤可参考 [PhoneGap Get Started](http://phonegap.com/getstarted/)）。
+
+
+#### License [BSD License](LICENSE.md)

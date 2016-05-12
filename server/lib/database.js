@@ -20,7 +20,9 @@ function save(enbxFile, name) {
     }).then(doc => {
       doc.name = name;
       doc.id = id;
-      fs.writeFile(path.join(unzipDir, 'doc.json'), JSON.stringify(doc), { encoding: 'utf8' }, function (err) {
+      fs.writeFile(path.join(unzipDir, 'doc.json'), JSON.stringify(doc), {
+        encoding: 'utf8'
+      }, function(err) {
         if (err) {
           reject(err);
         }
@@ -50,21 +52,22 @@ function get(id) {
 
 function list() {
   var promise = new Promise((resolve, reject) => {
-    fs.readdir(repoDirectory, function (err, files) {
+    fs.readdir(repoDirectory, function(err, files) {
       if (err) {
-        reject(err);
-      }
-      var promises = files.map(f => getStats(path.join(repoDirectory, f)));
-      Promise.all(promises).then(fileStats => {
-        var docList = fileStats.map(x => {
-          return {
-            name: x.path,
-            id: encodeURIComponent(x.path),
-            lastUpdated: formatDate(x.mtime)
-          };
+        resolve([]);
+      } else {
+        var promises = files.map(f => getStats(path.join(repoDirectory, f)));
+        Promise.all(promises).then(fileStats => {
+          var docList = fileStats.map(x => {
+            return {
+              name: x.path,
+              id: encodeURIComponent(x.path),
+              lastUpdated: formatDate(x.mtime)
+            };
+          });
+          resolve(docList);
         });
-        resolve(docList);
-      });
+      }
     });
   });
   return promise;

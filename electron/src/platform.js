@@ -4,7 +4,7 @@ const electron = require('remote');
 const $ = require('jquery');
 var electronWindow = electron.getCurrentWindow();
 var isDarwin = process.platform === 'darwin';
-var isWindows = process.platform === 'windows';
+var isWindows = process.platform === 'win32';
 
 function addDebugFeatures() {
   $('html').keydown(event => {
@@ -22,11 +22,18 @@ function addDebugFeatures() {
 
 function changeUI() {
   $('#system-buttons').show();
-  if(isDarwin){
+  if (isDarwin) {
     $('body').addClass('darwin');
   }
-  if(isWindows){
+  if (isWindows) {
     $('body').addClass('windows');
+    $('#main .header').append($(`
+        <p id="system-buttons">
+          <img src="res/img/system-min.svg" id="system-min" />
+          <img src="res/img/system-max.svg" id="system-max" />
+          <img src="res/img/system-restore.svg" id="system-restore" />
+          <img src="res/img/system-close.svg" id="system-close" />
+        </p>`));
   }
 }
 
@@ -66,7 +73,7 @@ function addDesktopFeatures() {
   });
 }
 
-function init(){
+function init() {
   addDebugFeatures();
   addDesktopFeatures();
 }

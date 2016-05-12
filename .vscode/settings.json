@@ -7,7 +7,6 @@
         "**/node_modules": true,
         "**/typings": true,
         "**/bower_components": true,
-        "server/res": true,
         "server/core": true,
         "server/data": true,
         "webapp": true
