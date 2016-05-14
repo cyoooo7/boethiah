@@ -2,13 +2,18 @@ var gulp = require('gulp');
 var browserify = require('gulp-browserify');
 var babel = require("gulp-babel");
 var exec = require('child_process').exec;
+var sass = require('gulp-sass');
 
 var paths = {
   core: './core/**/*.*',
   coreLib: './core/src/**/*.*',
   coreRes: './core/res/**/*.*',
+  coreSass: './core/res/sass/*.scss',
+  coreCss: './core/res/css/',
   coreIndexHtml: './core/index.html',
   electron: './electron/**/*.*',
+  electronSass: './electron/res/sass/*.scss',
+  electronCss: './electron/res/css/',
   web: './web/**/*.*',
   webRes: './web/res/**/*.*',
   serverCore: './server/core/',
@@ -45,9 +50,29 @@ function bundle(src, dst) {
   return promise;
 }
 
+function sassfile(src, dst) {
+  var promise = new Promise((resolve, reject) => {
+    return gulp.src(src)
+      .pipe(sass().on('error', (err) => {
+        console.error(err);
+      }))
+      .pipe(gulp.dest(dst))
+      .on('end', () => {
+        resolve();
+      });
+  });
+  return promise;
+}
+
 gulp.task('build-electron', cb => {
-  copy(paths.core, paths.binElectron).then(() => {
-    copy(paths.electron, paths.binElectron).then(cb);
+  sassfile(paths.coreSass, paths.coreCss).then(() => {
+    sassfile(paths.electronSass, paths.electronCss).then(() => {
+      copy(paths.core, paths.binElectron).then(() => {
+        copy(paths.electron, paths.binElectron).then(() => {
+          cb();
+        });
+      });
+    });
   });
 });
 

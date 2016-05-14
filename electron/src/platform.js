@@ -29,10 +29,10 @@ function changeUI() {
     $('body').addClass('windows');
     $('#main .header').append($(`
         <p id="system-buttons">
-          <img src="res/img/system-min.svg" id="system-min" />
-          <img src="res/img/system-max.svg" id="system-max" />
-          <img src="res/img/system-restore.svg" id="system-restore" />
-          <img src="res/img/system-close.svg" id="system-close" />
+          <img src="res/img/system-min.svg" id="system-min" class="button" />
+          <img src="res/img/system-max.svg" id="system-max" class="button" />
+          <img src="res/img/system-restore.svg" id="system-restore" class="button" />
+          <img src="res/img/system-close.svg" id="system-close" class="button" />
         </p>`));
     initSystemButtons();
   }

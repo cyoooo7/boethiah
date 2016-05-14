@@ -12,3 +12,4 @@ server/res
 /server/core
 typings
 /bin
+**/res/css

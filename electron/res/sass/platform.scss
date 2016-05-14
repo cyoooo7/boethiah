@@ -1,0 +1,64 @@
+.darwin{
+    #main .header {
+        display: none;
+    }
+
+    #content {
+        height: 100%;
+    }
+}
+
+ .windows{
+    ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 10px;
+        background: #b2b4b8;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        border-radius: 10px;
+        background: #9d9ea1;
+    }
+
+    .header {
+        -webkit-app-region: drag;
+    }
+
+    .button {
+        -webkit-app-region: no-drag;
+    }
+
+    #system-buttons {
+        -webkit-app-region: no-drag;
+        position: absolute;
+        right: 0;
+        top: 0;
+        color: #aaacb3;
+        margin: 0px;
+        display: block;
+    }
+    
+    #system-buttons .button {
+        cursor: auto;
+    }
+
+    #system-buttons img:hover {
+        background: #3a3c45;
+    }
+
+    #system-buttons #system-close:hover {
+        background: #cc5252;
+    }
+
+    #system-restore {
+        display: none;
+    }
+ }
