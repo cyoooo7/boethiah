@@ -103,6 +103,7 @@ function onHashChange() {
 function setDoc(doc) {
   currentDoc = doc;
   $('#doc-header-title').text(doc.name);
+  document.title = doc.name;
   slidePanel.render(doc.slides, renderer);
   setSlideIndex(0);
 }

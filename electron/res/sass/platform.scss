@@ -1,10 +1,6 @@
 .darwin{
     #main .header {
-        display: none;
-    }
-
-    #content {
-        height: 100%;
+        visibility: hidden;
     }
 }
 

@@ -8,7 +8,8 @@ function render(slides, renderer) {
     var $svg = $('<svg viewBox="0 0 1280 720"></svg>');
     let $li = $('<li class="doc-slide-item"></li>').hide();
     $panel.append($li);
-    $li.append($(`<div class="doc-slide-index">${i+1}</div>`));
+    $li.append($(`<div class="doc-slide-bg"></div>`));
+    $li.append($(`<h3 class="doc-slide-index">${i+1}</h3>`));
     $li.append($svg);
     renderer.render(slides[i], $svg[0]);
     $li.fadeIn(650);
