@@ -13,11 +13,11 @@ function render(slides, renderer) {
     $li.append($svg);
     renderer.render(slides[i], $svg[0]);
     $li.fadeIn(650);
-    $li.click(()=>{
-      let anchor = $.uriAnchor.makeAnchorMap();
-      anchor.slide = i+1;
-      $.uriAnchor.setAnchor(anchor);
-    });
+    // $li.click(()=>{
+    //   let anchor = $.uriAnchor.makeAnchorMap();
+    //   anchor.slide = i+1;
+    //   $.uriAnchor.setAnchor(anchor);
+    // });
   }
 }
 

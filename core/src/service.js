@@ -1,7 +1,7 @@
 "use strict";
 const fetch = require('node-fetch');
 
-let baseUrl = 'http://localhost:3000/';
+let baseUrl = 'http://192.168.3.19:3000/';
 if(window.env==='browser'){
   baseUrl = location.origin + '/';
 }

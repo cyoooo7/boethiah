@@ -176,12 +176,7 @@ img.button
     background: white;
 }
 
-.doc-item:active
-{
-    background: white;
-}
-
-.doc-item.current
+.doc-item.current-doc
 {
     background: white;
 }
@@ -224,6 +219,11 @@ img.button
 #doc-body
 {
     margin: 35px 40px 0 40px;
+}
+
+#doc-header
+{
+    display: none;
 }
 
 #doc-header h1
@@ -282,8 +282,8 @@ img.button
 .doc-slide-index
 {
     position: absolute;
-    left:0;
-    top:0;
+    right:0;
+    bottom:0;
     width: 30px;
     height: 24px;
     background-color: #000;
@@ -340,6 +340,46 @@ img.button
     position:absolute;
     bottom:7px;
     left:29px;
+}
+
+#showbox {
+    display: none;
+   position:absolute;
+   top:0;
+   left:0;
+   bottom: 0;
+   right: 0;
+   background: black;
+   z-index:2;
+}
+
+#showbox-board {
+   width:100vw;
+   max-width:calc(16 / 9 * 100vh);
+   height:100vh;
+   max-height:calc(9 / 16 * 100vw);
+   
+   position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(calc(-50%)) translateY(calc(-50%));
+}
+
+#exit-display-button
+{
+    font-size: 16px;
+    display:block;
+    padding: 4px 16px;
+    background: #334;
+    color: white;
+    position: absolute;
+    right:0;
+    bottom:0;
+    margin:10px 5px;
+    cursor:pointer;
+    opacity: 0.6;
+    border-radius: 3px;
+    border: 1px solid #000;
 }
 
 @media (max-width: 500px)

@@ -22,15 +22,12 @@ function init() {
 }
 
 function onPageReady() {
-  updateLayout();
-  window.onresize = function() {
-    updateLayout();
-  };
-  $('body').on('click', '#board', (event) => {
+  $('body').on('click', '#showbox svg', (event) => {
+    console.log(event.offsetX;);
     if (!isDisplayMode) {
       return;
     }
-    var w = $('#board').width();
+    var w = $('#showbox').width();
     var x = event.offsetX;
     if (x > w / 2) {
       setSlideIndex(currentSlideIndex + 1);
@@ -41,7 +38,7 @@ function onPageReady() {
   $('#display-button').click(() => {
     startDisplayMode();
   });
-  $('#exit-dispaly-button').click(() => {
+  $('#exit-display-button').click(() => {
     endDisplayMode();
   });
   $('html').keydown(function(event) {
@@ -67,29 +64,22 @@ function onPageReady() {
 
 function startDisplayMode() {
   isDisplayMode = true;
-  $('#board').addClass('fullscreen');
-  $('#exit-dispaly-button').show('fast');
+  $('#showbox').fadeIn();
+  var index = 0;
+  if (currentDoc && currentDoc.slides.length > index && index >= 0) {
+    setSlideIndex(0);
+  }
 }
 
 function endDisplayMode() {
   isDisplayMode = false;
-  $('#board').removeClass('fullscreen');
-  $('#exit-dispaly-button').hide('fast');
+  $('#showbox').fadeOut();
 }
 
-function updateLayout() {
-  var workspace = $('#workspace');
-  $('#board-container').stop().animate({
-    width: workspace.width(),
-    height: workspace.height()
-  }, 120);
-
-  var $thumbnails = $('#thumbnails');
-  $('#thumbnails').height($thumbnails.parent().height());
-}
 
 function onHashChange() {
   let anchor = $.uriAnchor.makeAnchorMap();
+  console.log("~" + JSON.stringify(anchor))
   if (anchor.did && (!currentDoc || currentDoc.id !== anchor.did)) {
     service.getDoc(anchor.did).then(doc => {
       setDoc(doc);
@@ -98,22 +88,34 @@ function onHashChange() {
   if (currentDoc && anchor.slide && anchor.slide !== currentSlideIndex) {
     setSlideIndex(anchor.slide - 1);
   }
+  if (typeof anchor.sidebar !== 'undefined') {
+    var $app = $('#app');
+    if (anchor.sidebar === 'show' && $app.hasClass('no-sidebar') ||
+      anchor.sidebar !== 'show' && !$app.hasClass('no-sidebar')) {
+      sidebar.toggle();
+    }
+  }
+  if (typeof anchor.d !== 'undefined') {
+    if (anchor.d === 1) {
+      startDisplayMode();
+    } else {
+      endDisplayMode();
+    }
+  }
 }
 
 function setDoc(doc) {
   currentDoc = doc;
   $('#doc-header-title').text(doc.name);
   document.title = doc.name;
+  $('#doc-header').fadeIn();
   slidePanel.render(doc.slides, renderer);
-  setSlideIndex(0);
 }
 
 function setSlideIndex(index) {
-  if (currentDoc && currentDoc.slides.length > index && index >= 0) {
+  if (currentDoc && isDisplayMode && currentDoc.slides.length > index && index >= 0) {
     currentSlideIndex = index;
-    // renderer.render(currentDoc.slides[index], '#board');
-    $('#thumbnails li').removeClass('active');
-    $(`#thumbnails li:nth-child(${index + 1})`).addClass('active');
+    renderer.render(currentDoc.slides[index], '#showbox-board');
   }
 }
 

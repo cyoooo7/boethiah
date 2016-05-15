@@ -5,8 +5,15 @@ const service = require('./../service');
 function toggleSidebar() {
   var $app = $('#app');
   $app.toggleClass('no-sidebar');
-  if (!$app.hasClass('no-sidebar')) {
+  if ($app.hasClass('no-sidebar')) {
     update();
+    setAnchor({
+      sidebar: "no"
+    });
+  } else {
+    setAnchor({
+      sidebar: "show"
+    });
   }
 }
 
@@ -36,11 +43,20 @@ function init() {
       $('#file-list-panel').fadeOut("fast");
     });
     $('#doc-list').on('click', 'li', event => {
-      let anchor = $.uriAnchor.makeAnchorMap();
-      anchor.did = event.currentTarget.attributes['data-doc-id'].value;
-      $.uriAnchor.setAnchor(anchor);
+      $('#doc-list li').removeClass('current-doc');
+      $(event.currentTarget).addClass('current-doc');
+      setAnchor({
+        did: event.currentTarget.attributes['data-doc-id'].value
+      });
     });
   });
 }
 
+function setAnchor(state) {
+  let anchor = $.uriAnchor.makeAnchorMap();
+  Object.assign(anchor, state);
+  $.uriAnchor.setAnchor(anchor);
+}
+
 exports.init = init;
+exports.toggle = toggleSidebar;

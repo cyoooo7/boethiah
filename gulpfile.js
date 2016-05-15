@@ -41,7 +41,9 @@ function bundle(src, dst) {
         debug: true,
         ignore: 'remote'
       }))
-      .pipe(babel())
+      .pipe(babel({
+        "presets": ["es2015"]
+      }))
       .pipe(gulp.dest(dst))
       .on('end', () => {
         resolve();
