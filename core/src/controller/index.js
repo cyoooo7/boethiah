@@ -23,7 +23,6 @@ function init() {
 
 function onPageReady() {
   $('body').on('click', '#showbox svg', (event) => {
-    console.log(event.offsetX;);
     if (!isDisplayMode) {
       return;
     }
